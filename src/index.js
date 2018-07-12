@@ -1,20 +1,31 @@
-import _ from 'lodash';
 
-function component() {
-    var element = document.createElement('div');
-    var button = document.createElement('button');
-    var br = document.createElement('br');
+import React from 'react'
+import ReactDOM from 'react-dom';
+import Loadable from 'react-loadable';
 
-    button.innerHTML = 'Click me and look at the console!';
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-    element.appendChild(br);
-    element.appendChild(button);
+async function getComponent() {
+    return class extends React.Component {
 
-    button.onclick = e => import(/* webpackChunkName: "print" */ './print').then(module => {
-        var print = module.default;
-        print();
-    });
-    return element;
+        handleClick = () => {
+            import(/* webpackChunkName: "print" */ './print').then(module => {
+                var print = module.default;
+                console.log(<print />)
+                console.log(document.getElementById('printarea'))
+                ReactDOM.render( <print />, document.getElementById('printarea')) //This does not work
+            });
+        }
+
+        render = () => {
+            return <div>
+                <div><a href="#" onClick={this.handleClick} >Click</a></div>
+            </div>
+        }
+    }
 }
 
-document.body.appendChild(component());
+getComponent().then(Component => {
+    console.log(Component)
+    ReactDOM.render( <Component />, document.getElementById('root'))
+})
+
+

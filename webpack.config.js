@@ -10,6 +10,18 @@ module.exports = {
         chunkFilename: '[name].bundle.js',
         path: path.resolve(__dirname, 'build')
     },
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader'
+            }
+        ]
+    },
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
     devServer: {
         contentBase: './build'
     }

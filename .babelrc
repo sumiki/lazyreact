@@ -1,0 +1,16 @@
+{
+  "presets": [
+    "react",
+    ["env", {
+      "targets": {
+        "node": "8.10"
+      }
+    }]
+  ],
+  "plugins": [
+    "syntax-dynamic-import",
+    "transform-react-jsx",
+    ["transform-class-properties", { "spec": true }], // class
+    "transform-object-rest-spread"
+  ]
+}
